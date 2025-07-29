@@ -9,7 +9,9 @@ npm run dev - запуск frontend проекта в dev режиме
 
 ## О проекте
 
-[Ссылка на макет дизайна](https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0-1&p=f&t=U2ZbAcQrhNowAQKL-0)
+[Ссылка на макет дизайна](https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0-1&p=f&t=U2ZbAcQrhNowAQKL-0)  
+
+[Ссылка на netlify](https://nailya.netlify.app/)
 
 На данном этапе:  
 Выполнена базовая верстка, и настроен базовый роутинг — можно перемещаться между страницами по кнопкам и ссылкам.
