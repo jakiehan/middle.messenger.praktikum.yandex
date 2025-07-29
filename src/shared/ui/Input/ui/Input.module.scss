@@ -1,0 +1,37 @@
+@use '../../../../app/styles/mixins/mixins.scss' as mixins;
+
+.label {
+  @include mixins.flexPosition(column, initial, initial);
+
+  width: 100%;
+}
+
+.span {
+  color: var(--text-secondary);
+  font-size: 9px;
+  line-height: 9px;
+}
+
+.input {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--color-accent);
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.secondaryLabel {
+  @include mixins.flexPosition(row, baseline, space-between);
+}
+
+.secondaryInput {
+  border-bottom: none;
+  background-color: transparent;
+  text-align: end;
+}
+
+.secondarySpan {
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 13px;
+}

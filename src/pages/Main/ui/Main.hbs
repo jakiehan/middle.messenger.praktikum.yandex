@@ -1,0 +1,14 @@
+<div class='{{classes}}'>
+  <div class='{{classListChats}}' id='{{listChatId}}'>
+    {{{listChats}}}
+  </div>
+  <div id='{{chatId}}'>
+    {{#if chat}}
+      {{{chat}}}
+    {{else}}
+      <div class="{{{classEmptyChat}}}">
+        {{{text}}}
+      </div>
+    {{/if}}
+  </div>
+</div>

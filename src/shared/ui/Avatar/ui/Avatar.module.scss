@@ -1,0 +1,22 @@
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sizeS {
+  min-width: 34px;
+  max-width: 34px;
+  height: 34px;
+}
+
+.sizeM {
+  min-width: 47px;
+  max-width: 47px;
+  height: 47px;
+}
+
+.sizeL {
+  min-width: 130px;
+  max-width: 130px;
+  height: 130px;
+}

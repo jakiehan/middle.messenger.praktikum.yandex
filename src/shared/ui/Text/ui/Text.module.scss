@@ -1,0 +1,36 @@
+.text, .beginning {
+  color: var(--text-primary);
+}
+
+.normal {
+  font-weight: 500;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.sizeXXL {
+  font-size: 40px;
+  line-height: 48px;
+}
+
+.sizeXL {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.sizeL {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.sizeS {
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.sizeXS {
+  font-size: 9px;
+  line-height: 13px;
+}

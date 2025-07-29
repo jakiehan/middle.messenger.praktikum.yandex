@@ -1,0 +1,30 @@
+@use '../../../../app/styles/mixins/mixins.scss' as mixins;
+
+.formAuth {
+  @include mixins.flexPosition(column, initial, initial);
+
+  width: 100%;
+  max-width: 340px;
+  min-height: 450px;
+  padding: 50px 30px 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 6px 0 #00000024;
+
+  & > fieldset {
+    & > legend {
+      margin: 0 auto 40px;
+    }
+
+    & > ul {
+      @include mixins.flexPosition(column, initial, initial, 16px);
+
+      margin-bottom: 50px;
+    }
+  }
+
+  .controls {
+    @include mixins.flexPosition(column, center, center, 14px);
+
+    margin-top: auto;
+  }
+}

@@ -1,0 +1,14 @@
+.formSearch {
+  border-radius: 5px;
+}
+
+.input {
+  height: 32px;
+  border-radius: 5px;
+  border-bottom: none;
+  background-color: var(--bg-tertiary);
+  
+  &::placeholder {
+    text-align: center;
+  }
+}

@@ -1,0 +1,9 @@
+@use '../../../app/styles/mixins/mixins.scss' as mixins;
+
+.reserveInfo {
+  @include mixins.flexPosition(column, center, center, 60px);
+
+  .info {
+    @include mixins.flexPosition(column, center, center, 15px);
+  }
+}

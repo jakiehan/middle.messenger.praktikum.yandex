@@ -1,0 +1,30 @@
+@use '../fonts/fonts';
+@use 'reset';
+@use './theme/dark';
+@use './theme/light';
+@use './mixins/mixins';
+
+.app {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 500;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}

@@ -1,0 +1,11 @@
+@use '../../../app/styles/mixins/mixins.scss' as mixins;
+
+.profile {
+  @include mixins.flexPosition(column, center, initial);
+}
+
+.wrapper {
+  @include mixins.flexPosition(column, center, initial, 20px);
+
+  margin: 60px auto;
+}
