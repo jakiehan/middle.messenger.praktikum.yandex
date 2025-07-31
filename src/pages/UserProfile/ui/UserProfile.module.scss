@@ -1,0 +1,21 @@
+@use '../../../app/styles/mixins/mixins.scss' as mixins;
+
+.userProfile {
+  display: grid;
+  min-height: inherit;
+  grid-template-columns: 64px 1fr;
+}
+
+.left {
+  @include mixins.flexPosition(column, center, center);
+
+  width: 64px;
+  height: 100%;
+  border-right: var(--border-primary);
+  background-color: var(--bg-secondary);
+
+  .backButton {
+    width: 60%;
+    border-radius: 50%;
+  }
+}

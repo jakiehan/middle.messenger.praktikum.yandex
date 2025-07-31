@@ -1,0 +1,13 @@
+<label class="{{labelClass}}">
+  {{#if label}}<span class="{{spanClass}}">{{label}}</span>{{/if}}
+  <input
+    class="{{inputClass}}"
+    name="{{name}}"
+    {{#if value}}value="{{value}}" {{/if}}
+    {{#if placeholder}}placeholder="{{placeholder}}" {{/if}}
+    {{#if disabled}}disabled="{{disabled}}" {{/if}}
+    {{#if type}}type="{{type}}" {{/if}}
+    {{#if ariaLabel}}aria-label="{{ariaLabel}}" {{/if}}
+    {{#if dataTestId}}data-testid="{{dataTestId}}"{{/if}}
+  />
+</label>

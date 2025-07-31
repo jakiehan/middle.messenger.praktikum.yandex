@@ -1,0 +1,14 @@
+<form class="{{classes}}" name="{{name}}">
+  <fieldset>
+    <legend>{{{title}}}</legend>
+    <ul>
+      {{#each inputs}}
+        <li>{{{this}}}</li>
+      {{/each}}
+    </ul>
+  </fieldset>
+  <div class="{{controlsClass}}">
+    {{{button}}}
+    {{{link}}}
+  </div>
+</form>

@@ -1,0 +1,10 @@
+<{{tag}} class='{{classes}}'
+  {{#if lineClampCount}}
+    style='-webkit-line-clamp: {{lineClampCount}}; -webkit-box-orient: vertical; overflow: hidden; display: -webkit-box;'
+  {{/if}}
+  >
+  {{#if beginning}}
+    <b class="{{classBeginning}}">{{beginning}}</b>
+  {{/if}}
+  {{text}}
+</{{tag}}>

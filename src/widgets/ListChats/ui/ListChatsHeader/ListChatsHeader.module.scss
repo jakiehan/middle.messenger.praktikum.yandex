@@ -1,0 +1,13 @@
+@use '../../../../app/styles/mixins/mixins.scss' as mixins;
+
+.listChatsHeader {
+  width: 100%;
+  padding: 20px 10px 15px;
+
+  @include mixins.flexPosition(column, initial, initial, 20px)
+}
+
+.link {
+  align-self: end;
+  color: var(--text-secondary);
+}

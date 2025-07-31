@@ -1,0 +1,30 @@
+@use '../../../app/styles/mixins/mixins.scss' as mixins;
+
+$background-color: rgb(228 237 253 / 100%);
+
+.listChats {
+  @include mixins.flexPosition(column, initial, initial);
+
+  overflow: hidden;
+  max-height: 100vh;
+  border-right: var(--border-primary);
+  background-color: var(--bg-secondary);
+}
+
+.list {
+  overflow: auto;
+
+  & > li:hover {
+    background-color: $background-color;
+    cursor: pointer;
+  }
+}
+
+.item {
+  width: 96%;
+  margin: 0 auto;
+}
+
+.active {
+  background-color: $background-color;
+}

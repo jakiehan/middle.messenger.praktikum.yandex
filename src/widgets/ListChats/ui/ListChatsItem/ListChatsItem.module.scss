@@ -1,0 +1,33 @@
+@use '../../../../app/styles/mixins/mixins.scss' as mixins;
+
+.listChatsItem {
+  @include mixins.flexPosition(row, initial, initial, 20px);
+
+  position: relative;
+  width: 100%;
+  height: 70px;
+  padding: 12px 10px;
+  border-top: var(--border-primary);
+  border-bottom: var(--border-primary);;
+
+  .left {
+    @include mixins.flexPosition(row, initial, initial, 10px);
+  }
+
+  .right {
+    @include mixins.flexPosition(initial, end, initial);
+
+    margin-left: auto;
+  }
+
+  .date {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    width: max-content;
+  }
+
+  .text {
+    color: var(--text-secondary);
+  }
+}

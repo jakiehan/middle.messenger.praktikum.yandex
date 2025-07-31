@@ -1,0 +1,11 @@
+@use '../../../../app/styles/mixins/mixins.scss' as mixins;
+
+.badge {
+  @include mixins.flexPosition(initial, center, center);
+
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--text-accent);
+  color: var(--text-tertiary);
+}
