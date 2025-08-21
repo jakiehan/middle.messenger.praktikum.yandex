@@ -1,1 +1,1 @@
-export { Badge } from './ui/Badge.ts';
+export { Badge } from './ui/Badge';

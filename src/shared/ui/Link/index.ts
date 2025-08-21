@@ -1,1 +1,1 @@
-export { Link } from './ui/Link.ts';
+export { Link } from './ui/Link';

@@ -1,1 +1,1 @@
-export { Registration } from './ui/Registration.ts';
+export { Registration } from './ui/Registration';

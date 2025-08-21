@@ -1,7 +1,7 @@
 @use '../../../../app/styles/mixins/mixins.scss' as mixins;
 
 .label {
-  @include mixins.flexPosition(column, initial, initial);
+  @include mixins.flexPosition(column, initial, initial, 4px);
 
   width: 100%;
 }
@@ -34,4 +34,11 @@
   color: var(--text-primary);
   font-size: 13px;
   line-height: 13px;
+}
+
+.error {
+  height: 10px;
+  color: var(--text-error);
+  font-size: 9px;
+  line-height: 10px;
 }

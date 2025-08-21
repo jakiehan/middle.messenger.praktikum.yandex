@@ -1,1 +1,1 @@
-export { NotFound } from './ui/NotFound.ts';
+export { NotFound } from './ui/NotFound';

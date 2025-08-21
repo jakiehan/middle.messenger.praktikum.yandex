@@ -1,1 +1,1 @@
-export { FormProfile } from './ui/FormProfile.ts';
+export { FormProfile } from './ui/FormProfile';

@@ -1,9 +1,9 @@
-import Handlebars from 'handlebars';
 import templateReserveInfo from './ReserveInfo.hbs?raw';
-import { getRouteMain } from '@/app/router/constants/routes.ts';
+import { Component } from '@/shared/lib';
+import { getRouteMain } from '@/app/router/constants/routes';
 import { Link } from '@/shared/ui/Link';
 import { Text } from '@/shared/ui/Text';
-import { cn } from '@/shared/lib/cn/cn';
+import { cn } from '@/shared/lib';
 import cls from './ReserveInfo.module.scss';
 
 interface ReserveInfoProps {
@@ -12,53 +12,33 @@ interface ReserveInfoProps {
   className?: string;
 }
 
-export class ReserveInfo {
-  public props: ReserveInfoProps;
-  private readonly template: HandlebarsTemplateDelegate;
-  private readonly link: Link;
-  private readonly text: Text;
-  private readonly title: Text;
-
+export class ReserveInfo extends Component {
   constructor(props: ReserveInfoProps) {
-    this.props = { ...props };
-    this.template = Handlebars.compile(templateReserveInfo);
-
-    this.link = new Link({
-      text: 'Назад к чатам',
-      href: getRouteMain(),
-    });
-
-    this.title = new Text({
-      tag: 'h1',
-      text: this.props.title,
-      fontWeight: 'normal',
-      size: 'sizeXXL',
-    });
-
-    this.text = new Text({
-      tag: 'p',
-      text: this.props.text,
-      fontWeight: 'normal',
-      size: 'sizeXL',
+    super({
+      ...props,
+      className: cn(cls.reserveInfo, [props.className]),
+      title: new Text({
+        tag: 'h1',
+        text: props.title,
+        fontWeight: 'normal',
+        size: 'sizeXXL',
+      }),
+      text: new Text({
+        tag: 'p',
+        text: props.text,
+        fontWeight: 'normal',
+        size: 'sizeXL',
+      }),
+      link: new Link({
+        text: 'Назад к чатам',
+        href: getRouteMain(),
+      }),
     });
   }
 
-  registerPartial() {
-    Handlebars.registerPartial('ReserveInfo', templateReserveInfo);
-    this.link.registerPartial();
-    this.text.registerPartial();
-    this.title.registerPartial();
-  }
-
-  render(): string {
-    const classes = cn(cls.reserveInfo, [this.props.className]);
-
-    return this.template({
-      classes,
+  render() {
+    return this.compile(templateReserveInfo, {
       classInfo: cls.info,
-      title: this.title.render(),
-      text: this.text.render(),
-      link: this.link.render(),
     });
   }
 }

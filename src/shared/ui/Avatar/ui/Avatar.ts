@@ -1,6 +1,6 @@
-import Handlebars from 'handlebars';
 import templateAvatar from './Avatar.hbs?raw';
-import { cn } from '../../../lib/cn/cn.ts';
+import { Component } from '../../../lib';
+import { cn } from '../../../lib';
 import cls from './Avatar.module.scss';
 
 type Size = 'sizeS' | 'sizeM' | 'sizeL';
@@ -12,29 +12,20 @@ interface AvatarProps {
   className?: string;
 }
 
-export class Avatar {
-  public props: AvatarProps;
-  private readonly template: HandlebarsTemplateDelegate;
-
+export class Avatar extends Component {
   constructor(props: AvatarProps) {
-    this.props = { ...props };
-    this.template = Handlebars.compile(templateAvatar);
-  }
-
-  registerPartial() {
-    Handlebars.registerPartial('Avatar', templateAvatar);
+    super({
+      ...props,
+      className: cn(cls.avatar, [
+        props?.size ? cls[props.size] : cls.sizeM,
+        props.className,
+      ]),
+    });
   }
 
   render() {
-    const classes = cn(cls.avatar, [
-      this.props?.size ? cls[this.props.size] : cls.sizeM,
-      this.props.className,
-    ]);
-
-    return this.template({
-      classes,
-      src: this.props.src,
-      alt: this.props.alt,
+    return this.compile(templateAvatar, {
+      ...this.props,
     });
   }
 }

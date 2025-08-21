@@ -10,4 +10,5 @@
     {{#if ariaLabel}}aria-label="{{ariaLabel}}" {{/if}}
     {{#if dataTestId}}data-testid="{{dataTestId}}"{{/if}}
   />
+  <span id="{{name}}-error-message" class="{{errorClass}}">{{#if error}}{{error}} {{/if}}</span>
 </label>
