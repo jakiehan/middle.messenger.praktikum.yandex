@@ -1,1 +1,1 @@
-export { Main } from './ui/Main.ts';
+export { Main } from './ui/Main';

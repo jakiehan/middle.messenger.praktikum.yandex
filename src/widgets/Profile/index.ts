@@ -1,1 +1,1 @@
-export { Profile } from './ui/Profile.ts';
+export { Profile } from './ui/Profile';

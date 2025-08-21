@@ -1,11 +1,14 @@
-import Handlebars from 'handlebars';
 import templateListChatsItem from './ListChatsItem.hbs?raw';
 import { Text } from '@/shared/ui/Text';
 import { Avatar } from '@/shared/ui/Avatar';
 import { Badge } from '@/shared/ui/Badge';
-import { cn } from '@/shared/lib/cn/cn';
+import { Component } from '@/shared/lib';
+import { getRouteChat } from '@/app/router/constants/routes';
+import { router } from '@/app/router';
+import { getParams } from '@/app/router/lib/parseRoute';
+import { CONTAINER_ID } from '@/pages/Main/constants/constanst';
+import { cn } from '@/shared/lib';
 import cls from './ListChatsItem.module.scss';
-import { CONTAINER_ID } from '@/pages/Main/constants/constanst.ts';
 
 interface ListChatsItemProps {
   id: number;
@@ -19,78 +22,70 @@ interface ListChatsItemProps {
   className?: string;
 }
 
-export class ListChatsItem {
-  public props: ListChatsItemProps;
-  private readonly template: HandlebarsTemplateDelegate;
-  private readonly avatar: Avatar;
-  private readonly message: Text;
-  private readonly title: Text;
-  private readonly date: Text;
-  private readonly badge: Badge;
-
+export class ListChatsItem extends Component {
   constructor(props: ListChatsItemProps) {
-    this.props = { ...props };
-    this.template = Handlebars.compile(templateListChatsItem);
+    super({
+      ...props,
+      className: cn(cls.listChatsItem, [props.className]),
+      onClick: () => this.handleClick(),
+      avatar: new Avatar({
+        size: 'sizeM',
+        src: props.src,
+        alt: props.alt,
+      }),
 
-    this.avatar = new Avatar({
-      size: 'sizeM',
-      src: this.props.src,
-      alt: this.props.alt,
-    });
+      title: new Text({
+        tag: 'p',
+        text: props.title,
+        fontWeight: 'bold',
+        size: 'sizeM',
+      }),
 
-    this.title = new Text({
-      tag: 'p',
-      text: this.props.title,
-      fontWeight: 'bold',
-      size: 'sizeM',
-    });
+      date: new Text({
+        tag: 'p',
+        text: props.date,
+        fontWeight: 'normal',
+        size: 'sizeXS',
+        className: cn(cls.date, [cls.text]),
+      }),
 
-    this.date = new Text({
-      tag: 'p',
-      text: this.props.date,
-      fontWeight: 'normal',
-      size: 'sizeXS',
-      className: cn(cls.date, [cls.text]),
-    });
+      message: new Text({
+        tag: 'p',
+        text: props.message,
+        fontWeight: 'normal',
+        size: 'sizeS',
+        lineClampCount: 2,
+        beginning: props.hasLastMessageUser ? 'Вы:' : undefined,
+        className: cls.text,
+      }),
 
-    this.message = new Text({
-      tag: 'p',
-      text: this.props.message,
-      fontWeight: 'normal',
-      size: 'sizeS',
-      lineClampCount: 2,
-      beginning: this.props.hasLastMessageUser ? 'Вы:' : undefined,
-      className: cls.text,
-    });
-
-    this.badge = new Badge({
-      value: this.props?.newMessageCount ?? '',
+      badge: props.newMessageCount
+        ? new Badge({
+            value: props?.newMessageCount ?? '',
+          })
+        : null,
     });
   }
 
-  registerPartial() {
-    this.avatar.registerPartial();
-    this.message.registerPartial();
-    this.title.registerPartial();
-    this.date.registerPartial();
-    this.badge.registerPartial();
-    Handlebars.registerPartial('ListChatsItem', templateListChatsItem);
-  }
+  public handleClick = () => {
+    const chatId = String(this.props.id);
+
+    const currentParams = getParams(
+      window.location.pathname,
+      getRouteChat(':id')
+    );
+
+    if (currentParams?.['id'] === chatId) return;
+
+    router.navigate(getRouteChat(chatId));
+  };
 
   render() {
-    const classes = cn(cls.listChatsItem, [this.props.className]);
-
-    return this.template({
-      classes,
+    return this.compile(templateListChatsItem, {
       classRight: cls.right,
       classLeft: cls.left,
       id: CONTAINER_ID.LIST_CHAT_ITEM,
       dataId: this.props.id,
-      avatar: this.avatar.render(),
-      title: this.title.render(),
-      message: this.message.render(),
-      date: this.date.render(),
-      badge: this.props.newMessageCount ? this.badge.render() : null,
     });
   }
 }

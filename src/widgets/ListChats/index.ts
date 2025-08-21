@@ -1,1 +1,1 @@
-export { ListChats } from './ui/ListChats.ts';
+export { ListChats } from './ui/ListChats';

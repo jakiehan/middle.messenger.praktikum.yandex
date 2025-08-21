@@ -1,6 +1,6 @@
-import Handlebars from 'handlebars';
 import templateText from './Text.hbs?raw';
-import { cn } from '../../../lib/cn/cn.ts';
+import { Component } from '../../../lib';
+import { cn } from '../../../lib';
 import cls from './Text.module.scss';
 
 type Tag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
@@ -16,28 +16,20 @@ interface TextProps {
   className?: string;
 }
 
-export class Text {
-  public props: TextProps;
-  private readonly template: HandlebarsTemplateDelegate;
-
+export class Text extends Component {
   constructor(props: TextProps) {
-    this.props = { ...props };
-    this.template = Handlebars.compile(templateText);
-  }
-
-  registerPartial() {
-    Handlebars.registerPartial('Text', templateText);
+    super({
+      ...props,
+      className: cn(cls.text, [
+        cls[props.fontWeight],
+        cls[props.size],
+        props.className,
+      ]),
+    });
   }
 
   render() {
-    const classes = cn(cls.text, [
-      cls[this.props.fontWeight],
-      cls[this.props.size],
-      this.props.className,
-    ]);
-
-    return this.template({
-      classes,
+    return this.compile(templateText, {
       classBeginning: cls.beginning,
       ...this.props,
     });

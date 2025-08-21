@@ -1,1 +1,1 @@
-export { ReserveInfo } from './ui/ReserveInfo.ts';
+export { ReserveInfo } from './ui/ReserveInfo';

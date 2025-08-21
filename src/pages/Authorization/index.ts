@@ -1,1 +1,1 @@
-export { Authorization } from './ui/Authorization.ts';
+export { Authorization } from './ui/Authorization';
