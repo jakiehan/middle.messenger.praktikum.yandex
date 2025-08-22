@@ -1,6 +1,6 @@
-import Handlebars from 'handlebars';
 import templateLink from './Link.hbs?raw';
-import { cn } from '../../../lib/cn/cn.ts';
+import { Component } from '../../../lib';
+import { cn } from '../../../lib';
 import cls from './Link.module.scss';
 
 interface LinkProps {
@@ -9,25 +9,12 @@ interface LinkProps {
   className?: string;
 }
 
-export class Link {
-  public props: LinkProps;
-  private readonly template: HandlebarsTemplateDelegate;
-
+export class Link extends Component {
   constructor(props: LinkProps) {
-    this.props = { ...props };
-    this.template = Handlebars.compile(templateLink);
-  }
-
-  registerPartial() {
-    Handlebars.registerPartial('Link', templateLink);
+    super({ ...props, className: cn(cls.link, [props.className]) });
   }
 
   render() {
-    const classes = cn(cls.link, [this.props.className]);
-
-    return this.template({
-      ...this.props,
-      classes,
-    });
+    return this.compile(templateLink, { ...this.props });
   }
 }

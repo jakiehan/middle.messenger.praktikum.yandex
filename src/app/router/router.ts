@@ -1,11 +1,11 @@
-import { routeConfig } from './constants/constants.ts';
-import type { Page } from './constants/constants.ts';
-import { getRouteByPath } from './lib/parseRoute.ts';
+import { type ComponentClass, routeConfig } from './constants/constants';
+import { Component } from '@/shared/lib/Component/Component';
+import { getParams, getRouteByPath } from './lib/parseRoute';
 
 export class Router {
   private static instance: Router | null = null;
   private isInitialized = false;
-  private currentPage: Page | undefined = undefined;
+  private currentPage?: Component;
   private config = {
     appSelector: '.app',
     linkSelector: 'a[href^="/"]',
@@ -14,10 +14,7 @@ export class Router {
   private constructor() {}
 
   public static getInstance(): Router {
-    if (!Router.instance) {
-      Router.instance = new Router();
-    }
-    return Router.instance;
+    return Router.instance ?? (Router.instance = new Router());
   }
 
   private handlePopState = () => {
@@ -26,48 +23,62 @@ export class Router {
 
   private handleClick = (e: MouseEvent) => {
     const link = (e.target as HTMLElement).closest(this.config.linkSelector);
-    if (link && link instanceof HTMLAnchorElement) {
+    if (link instanceof HTMLAnchorElement) {
       e.preventDefault();
-      const { pathname } = new URL(link.href);
-      this.navigate(pathname);
+      this.navigate(new URL(link.href).pathname);
     }
   };
 
+  private mountComponent(component: Component, appElement: Element) {
+    const content = component.getContent();
+
+    if (content) {
+      appElement.innerHTML = '';
+      appElement.append(content);
+      component.dispatchComponentDidMount();
+    }
+
+    this.currentPage = component;
+  }
+
+  private renderWithLayout(
+    Layout: ComponentClass,
+    pageInstance: Component,
+    appElement: Element
+  ) {
+    if (this.currentPage instanceof Layout) {
+      this.currentPage.setSlot('content', pageInstance);
+    } else {
+      const layoutInstance = new Layout({ content: pageInstance });
+      this.mountComponent(layoutInstance, appElement);
+    }
+  }
+
   private render(path: string) {
     const appElement = document.querySelector(this.config.appSelector);
-
-    if (!appElement) {
-      console.error(
-        `Элемент с селектором "${this.config.appSelector}" не найден`
-      );
-      return;
-    }
-
-    if (this.currentPage?.destroy) {
-      this.currentPage.destroy();
-    }
+    if (!appElement) return;
 
     const match = getRouteByPath(path);
-    this.currentPage = match?.route?.element;
-    appElement.innerHTML =
-      this?.currentPage?.render() ?? routeConfig.NOT_FOUND.element.render();
+    const route = match?.route ?? routeConfig.NOT_FOUND;
+    const Page = route.element;
+    const Layout = route?.layout;
 
-    if (this.currentPage?.mount) {
-      this.currentPage.mount();
+    const params = match ? (getParams(path, route.path) ?? {}) : {};
+
+    const pageInstance = new Page(params);
+
+    if (Layout) {
+      this.renderWithLayout(Layout, pageInstance, appElement);
+    } else {
+      this.mountComponent(pageInstance, appElement);
     }
   }
 
   public navigate(path: string, render = true) {
-    window.history.pushState({}, '', path);
-
-    if (render) {
-      this.render(path);
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
     }
-  }
-
-  public configure(options: Partial<typeof this.config>) {
-    this.config = { ...this.config, ...options };
-    return this;
+    if (render) this.render(path);
   }
 
   public init() {
@@ -75,7 +86,6 @@ export class Router {
       console.warn('Router уже инициализирован');
       return;
     }
-
     this.isInitialized = true;
 
     window.addEventListener('popstate', this.handlePopState);

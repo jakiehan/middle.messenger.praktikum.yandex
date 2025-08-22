@@ -1,1 +1,1 @@
-export { FormSearch } from './ui/FormSearch.ts';
+export { FormSearch } from './ui/FormSearch';

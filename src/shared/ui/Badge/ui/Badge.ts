@@ -1,6 +1,6 @@
-import Handlebars from 'handlebars';
 import templateBadge from './Badge.hbs?raw';
-import { cn } from '../../../lib/cn/cn.ts';
+import { Component } from '@/shared/lib';
+import { cn } from '../../../lib';
 import cls from './Badge.module.scss';
 
 interface BadgeProps {
@@ -8,25 +8,17 @@ interface BadgeProps {
   className?: string;
 }
 
-export class Badge {
-  public props: BadgeProps;
-  private readonly template: HandlebarsTemplateDelegate;
-
+export class Badge extends Component {
   constructor(props: BadgeProps) {
-    this.props = { ...props };
-    this.template = Handlebars.compile(templateBadge);
-  }
-
-  registerPartial() {
-    Handlebars.registerPartial('Badge', templateBadge);
+    super({
+      ...props,
+      className: cn(cls.badge, [props.className]),
+    });
   }
 
   render() {
-    const classes = cn(cls.badge, [this.props.className]);
-
-    return this.template({
-      ...this.props,
-      classes,
+    return this.compile(templateBadge, {
+      ...this._props,
     });
   }
 }

@@ -1,4 +1,4 @@
-import { type Route, routeConfig } from '../constants/constants.ts';
+import { type Route, routeConfig } from '../constants/constants';
 
 interface PathToRegReturn {
   regex: RegExp;
@@ -18,8 +18,13 @@ const convertPathToReg = (path: string): PathToRegReturn => {
   return { regex, namesParams };
 };
 
-const getParams = (path: string, route: Route) => {
-  const { regex, namesParams } = convertPathToReg(route.path);
+const getNormalizedPath = (path: string) => {
+  return path.startsWith('/') ? path : `/${path}`;
+};
+
+export const getParams = (path: string, routePath: string) => {
+  path = getNormalizedPath(path);
+  const { regex, namesParams } = convertPathToReg(routePath);
   const regMatchArr = path.match(regex);
 
   if (!regMatchArr) return null;
@@ -34,7 +39,7 @@ const getParams = (path: string, route: Route) => {
 };
 
 export const getRouteByPath = (path: string) => {
-  const normalizePath = path.startsWith('/') ? path : `/${path}`;
+  const normalizePath = getNormalizedPath(path);
   const routeConfigValues = (Object.values(routeConfig) as Route[]).filter(
     (route) => route.public
   );
@@ -45,6 +50,5 @@ export const getRouteByPath = (path: string) => {
 
   if (!route) return null;
 
-  const params = getParams(normalizePath, route);
-  return { route, params, path };
+  return { route, path };
 };

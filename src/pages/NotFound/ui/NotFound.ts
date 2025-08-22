@@ -1,30 +1,20 @@
-import Handlebars from 'handlebars';
 import templateNotFound from './NotFound.hbs?raw';
 import { ReserveInfo } from '@/widgets/ReserveInfo';
+import { Component } from '@/shared/lib';
 import cls from './NotFound.module.scss';
 
-export class NotFound {
-  private readonly template: HandlebarsTemplateDelegate;
-  private content: ReserveInfo;
-
+export class NotFound extends Component {
   constructor() {
-    this.template = Handlebars.compile(templateNotFound);
-
-    this.content = new ReserveInfo({
-      title: '404',
-      text: 'Не туда попали',
+    super({
+      className: cls.notFound,
+      content: new ReserveInfo({
+        title: '404',
+        text: 'Не туда попали',
+      }),
     });
   }
 
-  registerPartial() {
-    this.content.registerPartial();
-    Handlebars.registerPartial('NotFound', templateNotFound);
-  }
-
-  render(): string {
-    return this.template({
-      classes: cls.notFound,
-      content: this.content.render(),
-    });
+  render() {
+    return this.compile(templateNotFound, {});
   }
 }

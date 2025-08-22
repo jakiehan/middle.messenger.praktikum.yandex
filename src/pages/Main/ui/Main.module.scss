@@ -1,23 +1,11 @@
-@use '../../../app/styles/mixins/mixins.scss' as mixins;
-
 .main {
-  display: grid;
-  width: 100%;
-  min-height: inherit;
-  grid-template-columns: 310px 1fr;
-}
-
-.listChats {
-  height: 100%;
-}
-
-.emptyChat {
-  @include mixins.flexPosition(initial, center, center);
-  
+  display: flex;
   width: 100%;
   height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
-.emptyText {
+.text {
   color: var(--text-secondary);
 }

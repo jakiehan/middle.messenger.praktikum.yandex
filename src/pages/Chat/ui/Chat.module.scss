@@ -1,0 +1,54 @@
+@use '../../../app/styles/mixins/mixins.scss' as mixins;
+
+.chat {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.chatHeader {
+  @include mixins.flexPosition(row, center, space-between);
+
+  padding: 10px 0;
+  border-bottom: var(--border-primary);
+}
+
+.chatContent {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.group {
+  color: var(--icon-primary);
+}
+
+.attach {
+  color: var(--icon-secondary);
+}
+
+.chatFooter {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  border-top: var(--border-primary);
+
+  @include mixins.flexPosition(row, start, center, 10px);
+}

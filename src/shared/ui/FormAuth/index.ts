@@ -1,1 +1,1 @@
-export { FormAuth } from './ui/FormAuth.ts';
+export { FormAuth } from './ui/FormAuth';

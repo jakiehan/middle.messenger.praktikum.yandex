@@ -1,1 +1,1 @@
-export { Text } from './ui/Text.ts';
+export { Text } from './ui/Text';

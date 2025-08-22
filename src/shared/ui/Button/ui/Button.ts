@@ -1,7 +1,7 @@
-import Handlebars from 'handlebars';
 import templateButton from './Button.hbs?raw';
+import { Component } from '@/shared/lib';
+import { cn } from '../../../lib';
 import cls from './Button.module.scss';
-import { cn } from '../../../lib/cn/cn.ts';
 
 interface ButtonProps {
   text: string;
@@ -12,44 +12,18 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-export class Button {
-  public props: ButtonProps;
-  private readonly template: HandlebarsTemplateDelegate;
-  private buttonElement: HTMLElement | null = null;
-
+export class Button extends Component {
   constructor(props: ButtonProps) {
-    this.props = { ...props };
-    this.template = Handlebars.compile(templateButton);
-  }
-
-  registerPartial() {
-    Handlebars.registerPartial('Button', templateButton);
-  }
-
-  render() {
-    const classes = cn(cls.button, [this.props.className]);
-
-    return this.template({
-      ...this.props,
-      classes,
+    super({
+      ...props,
+      className: cn(cls.button, [props.className]),
+      onClick: () => props?.onClick?.(),
     });
   }
 
-  mount() {
-    if (this.props.id && this.props.onClick) {
-      this.buttonElement = document.getElementById(this.props.id);
-
-      if (this.buttonElement) {
-        this.buttonElement.addEventListener('click', this.props.onClick);
-      }
-    }
-  }
-
-  destroy() {
-    if (this.buttonElement && this.props.onClick) {
-      this.buttonElement.removeEventListener('click', this.props.onClick);
-    }
-
-    this.buttonElement = null;
+  render() {
+    return this.compile(templateButton, {
+      ...this._props,
+    });
   }
 }

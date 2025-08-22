@@ -1,1 +1,1 @@
-export { Error } from './ui/Error.ts';
+export { Error } from './ui/Error';

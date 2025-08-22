@@ -2,8 +2,11 @@ import { Authorization } from '@/pages/Authorization';
 import { Registration } from '@/pages/Registration';
 import { NotFound } from '@/pages/NotFound';
 import { Error } from '@/pages/Error';
-import { UserProfile } from '@/pages/UserProfile';
+import { Chat } from '@/pages/Chat';
 import { Main } from '@/pages/Main';
+import { UserProfile } from '@/pages/UserProfile';
+import { ChatLayout } from '@/shared/ui/Layout';
+import type { Component } from '@/shared/lib';
 import {
   ROUTES,
   getRouteError,
@@ -13,32 +16,17 @@ import {
   getRouteProfile,
   getRouteNotFound,
   getRouteChat,
-} from '@/app/router/constants/routes.ts';
+} from '@/app/router/constants/routes';
 
-const AuthorizationPage = new Authorization();
-const RegistrationPage = new Registration();
-const NotFoundPage = new NotFound();
-const ErrorPage = new Error();
-const MainPage = new Main();
-const UserProfilePage = new UserProfile();
-
-AuthorizationPage.registerPartial();
-RegistrationPage.registerPartial();
-NotFoundPage.registerPartial();
-ErrorPage.registerPartial();
-MainPage.registerPartial();
-UserProfilePage.registerPartial();
-
-export interface Page {
-  render: () => string;
-  destroy?: () => void;
-  mount?: () => void;
-}
+export type ComponentClass<T extends Component = Component<any>> = new (
+  ...args: any[]
+) => T;
 
 export type Route = {
   path: string;
-  element: Page;
+  element: ComponentClass;
   public?: boolean;
+  layout?: ComponentClass;
 };
 
 type RouteKeys = keyof typeof ROUTES;
@@ -47,37 +35,39 @@ type RouteConfig = Record<RouteKeys, Route>;
 export const routeConfig: RouteConfig = {
   MAIN: {
     path: getRouteMain(),
-    element: MainPage,
+    element: Main,
     public: true,
+    layout: ChatLayout as typeof Component,
   },
   LOGIN: {
     path: getRouteLogin(),
-    element: AuthorizationPage,
+    element: Authorization,
     public: true,
   },
   ERROR: {
     path: getRouteError(),
-    element: ErrorPage,
-    public: true,
-  },
-  REGISTRATION: {
-    path: getRouteRegistration(),
-    element: RegistrationPage,
-    public: true,
-  },
-  PROFILE: {
-    path: getRouteProfile(':id'),
-    element: UserProfilePage,
+    element: Error,
     public: true,
   },
   NOT_FOUND: {
     path: getRouteNotFound(),
-    element: NotFoundPage,
+    element: NotFound,
+    public: true,
+  },
+  REGISTRATION: {
+    path: getRouteRegistration(),
+    element: Registration,
+    public: true,
+  },
+  PROFILE: {
+    path: getRouteProfile(':id'),
+    element: UserProfile,
     public: true,
   },
   CHAT: {
     path: getRouteChat(':id'),
-    element: MainPage,
+    element: Chat,
     public: true,
+    layout: ChatLayout as typeof Component,
   },
 };
